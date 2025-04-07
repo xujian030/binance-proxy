@@ -2,9 +2,10 @@
   "name": "binance-proxy",
   "version": "1.0.0",
   "description": "Binance API Proxy for Mainland China",
-  "main": "index.js",
+  "main": "api/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "vercel dev",
+    "deploy": "vercel deploy"
   },
   "keywords": [],
   "author": "",
