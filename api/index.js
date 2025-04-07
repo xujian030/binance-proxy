@@ -12,15 +12,21 @@ export default async function handler(req, res) {
   }
 
   try {
+    // 获取请求路径
+    const path = req.url.split('?')[0];
+    const query = req.url.includes('?') ? '?' + req.url.split('?')[1] : '';
+    
     // 构建 Binance API URL
-    const url = new URL(req.url, BINANCE_API_URL);
-    url.pathname = '/api/v3' + url.pathname;
+    const url = `${BINANCE_API_URL}${path}${query}`;
+    console.log('Proxying request to:', url);
     
     // 复制原始请求的头部
-    const headers = { ...req.headers };
-    delete headers.host;
-    delete headers.origin;
-    delete headers.referer;
+    const headers = {
+      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
+      'Accept': 'application/json',
+      'Accept-Encoding': 'gzip, deflate, br',
+      'Connection': 'keep-alive'
+    };
     
     // 发送请求到 Binance API
     const response = await fetch(url, {
